@@ -19,7 +19,7 @@ var my_news = [
 var TestInput = React.createClass({
     getInitialState: function () {
         return {
-            testInput: 'введите значение'
+            testInput: ''
         }
     },
 
@@ -29,11 +29,22 @@ var TestInput = React.createClass({
         })
     },
 
+    onSubmit: function (e) {
+        alert(this.state.testInput)
+    },
+
     render: function () {
         var testInput = this.state.testInput;
 
         return (
-            <input className="test-input" value={testInput} onChange={this.onTestInputChange} />
+            <div>
+                <input className="test-input"
+                       value={testInput}
+                       placeholder='введите значение'
+                       onChange={this.onTestInputChange} />
+
+                <button type='submit' onClick={this.onSubmit}>Добавить</button>
+            </div>
         )
     }
 });
