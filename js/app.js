@@ -16,12 +16,35 @@ var my_news = [
     }
 ];
 
+var TestInput = React.createClass({
+    getInitialState: function () {
+        return {
+            testInput: 'введите значение'
+        }
+    },
+
+    onTestInputChange: function (e) {
+        this.setState({
+            testInput: e.target.value
+        })
+    },
+
+    render: function () {
+        var testInput = this.state.testInput;
+
+        return (
+            <input className="test-input" value={testInput} onChange={this.onTestInputChange} />
+        )
+    }
+});
+
 var App = React.createClass({
     render: function() {
         return (
             <div className="app">
                 <h3>Новости</h3>
-                <News  data={my_news} />
+                <TestInput />
+                <News data={my_news} />
             </div>
         );
     }
