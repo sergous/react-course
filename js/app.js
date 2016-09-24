@@ -24,6 +24,20 @@ var App = React.createClass({
     }
 });
 
+var Article = React.createClass({
+    render: function () {
+        var author = this.props.author;
+        var text = this.props.text;
+
+        return (
+            <div className="article">
+                <p className="author">{author}:</p>
+                <p className="text">{text}</p>
+            </div>
+        )
+    }
+});
+
 var News = React.createClass({
     render: function() {
         var data = this.props.data;
@@ -32,10 +46,7 @@ var News = React.createClass({
         if (data.length > 0) {
             newsTemplate = data.map(function (item, index) {
                 return (
-                    <div key={index}>
-                        <p className="news_author">{item.author}:</p>
-                        <p className="news_text">{item.text}</p>
-                    </div>
+                    <Article author={item.author} text={item.text} key={index} />
                 )
             });
         } else {
