@@ -17,31 +17,18 @@ var my_news = [
 ];
 
 var TestInput = React.createClass({
-    getInitialState: function () {
-        return {
-            testInput: ''
-        }
-    },
-
-    onTestInputChange: function (e) {
-        this.setState({
-            testInput: e.target.value
-        })
-    },
-
     onSubmit: function (e) {
-        alert(this.state.testInput)
+        console.log(this.refs);
+        alert(ReactDOM.findDOMNode(this.refs.myTestInput).value)
     },
 
     render: function () {
-        var testInput = this.state.testInput;
-
         return (
             <div>
                 <input className="test-input"
-                       value={testInput}
-                       placeholder='введите значение'
-                       onChange={this.onTestInputChange} />
+                       defaultValue=''
+                       ref="myTestInput"
+                       placeholder='введите значение' />
 
                 <button type='submit' onClick={this.onSubmit}>Добавить</button>
             </div>
