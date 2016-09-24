@@ -25,6 +25,11 @@ var App = React.createClass({
 });
 
 var Article = React.createClass({
+    propTypes: {
+        author: React.PropTypes.string.isRequired,
+        text: React.PropTypes.string.isRequired
+    },
+    
     render: function () {
         var author = this.props.author;
         var text = this.props.text;
@@ -39,6 +44,10 @@ var Article = React.createClass({
 });
 
 var News = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired
+    },
+
     render: function() {
         var data = this.props.data;
         var newsTemplate;
