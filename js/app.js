@@ -1,15 +1,18 @@
 var my_news = [
     {
         author: 'Саша Печкин',
-        text: 'В четверг, четвертого числа...'
+        text: 'В четчерг, четвертого числа...',
+        bigText: 'в четыре с четвертью часа четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж.'
     },
     {
         author: 'Просто Вася',
-        text: 'Считаю, что $ должен стоить 35 рублей!'
+        text: 'Считаю, что $ должен стоить 35 рублей!',
+        bigText: 'А евро 42!'
     },
     {
         author: 'Гость',
-        text: 'Бесплатно. Скачать. Лучший сайт - http://localhost:3000'
+        text: 'Бесплатно. Скачать. Лучший сайт - http://localhost:3000',
+        bigText: 'На самом деле платно, просто нужно прочитать очень длинное лицензионное соглашение'
     }
 ];
 
@@ -27,17 +30,34 @@ var App = React.createClass({
 var Article = React.createClass({
     propTypes: {
         author: React.PropTypes.string.isRequired,
-        text: React.PropTypes.string.isRequired
+        text: React.PropTypes.string.isRequired,
+        bigText: React.PropTypes.string.isRequired
+    },
+
+    getInitialState: function () {
+        return {
+            visible: false
+        };
+    },
+
+    readmoreClick: function (e) {
+        e.preventDefault();
+        this.setState({visible: true})
     },
     
     render: function () {
-        var author = this.props.author;
-        var text = this.props.text;
+        var author = this.props.author,
+            text = this.props.text,
+            bigText = this.props.bigText,
+            visible = this.state.visible;
 
         return (
             <div className="article">
                 <p className="author">{author}:</p>
                 <p className="text">{text}</p>
+                <a href="#" className={ "readmore " + (visible ? 'none' : '' ) }
+                    onClick={this.readmoreClick}>Подробнее</a>
+                <p className={ "big-text " + (visible ? '' : 'none' ) }>{bigText}</p>
             </div>
         )
     }
@@ -55,7 +75,7 @@ var News = React.createClass({
         if (data.length > 0) {
             newsTemplate = data.map(function (item, index) {
                 return (
-                    <Article author={item.author} text={item.text} key={index} />
+                    <Article author={item.author} text={item.text} bigText={item.bigText} key={index} />
                 )
             });
         } else {
