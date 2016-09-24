@@ -47,19 +47,8 @@ var News = React.createClass({
             <div className="news">
                 {newsTemplate}
                 <strong className={data.length > 0 ? '' : 'none'}>Всего новостей: {data.length}</strong>
-                <Comments />
             </div>
         );
-    }
-});
-
-var Comments = React.createClass({
-    render: function () {
-        return (
-            <div className="comments">
-                Нет новостей - комментировать нечего.
-            </div>
-        )
     }
 });
 
