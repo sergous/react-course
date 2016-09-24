@@ -17,6 +17,10 @@ var my_news = [
 ];
 
 var TestInput = React.createClass({
+    componentDidMount: function () {
+        ReactDOM.findDOMNode(this.refs.myTestInput).focus();
+    },
+
     onSubmit: function (e) {
         console.log(this.refs);
         alert(ReactDOM.findDOMNode(this.refs.myTestInput).value)
