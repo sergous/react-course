@@ -17,7 +17,7 @@ var App = React.createClass({
     render: function() {
         return (
             <div className="app">
-                Всем привет, я компонент App! Я умею отображат новости.
+                Всем привет, я компонент App! Я умею отображать новости.
                 <News  data={my_news} />
             </div>
         );
@@ -27,18 +27,26 @@ var App = React.createClass({
 var News = React.createClass({
     render: function() {
         var data = this.props.data;
-        var newsTemplate = data.map(function (item, index) {
-            return (
-                <div key={index}>
-                    <p className="news_author">{item.author}:</p>
-                    <p className="news_text">{item.text}</p>
-                </div>
-            )
-        });
+        var newsTemplate;
+
+        if (data.length > 0) {
+            newsTemplate = data.map(function (item, index) {
+                return (
+                    <div key={index}>
+                        <p className="news_author">{item.author}:</p>
+                        <p className="news_text">{item.text}</p>
+                    </div>
+                )
+            });
+        } else {
+            newsTemplate =
+                <p>К сожалению, новостей нет.</p>
+        }
 
         return (
             <div className="news">
                 {newsTemplate}
+                <strong className={data.length > 0 ? '' : 'none'}>Всего новостей: {data.length}</strong>
                 <Comments />
             </div>
         );
