@@ -39,18 +39,11 @@ var Add = React.createClass({
             agreeNotChecked: !this.state.agreeNotChecked
         });
     },
-    onAuthorChange: function(e) {
+    onFieldChange: function(fieldName, e) {
         if (e.target.value.trim().length > 0) {
-            this.setState({authorIsEmpty: false})
+            this.setState({['' + fieldName]: false})
         } else {
-            this.setState({authorIsEmpty: true})
-        }
-    },
-    onTextChange: function(e) {
-        if (e.target.value.trim().length > 0) {
-            this.setState({textIsEmpty: false})
-        } else {
-            this.setState({textIsEmpty: true})
+            this.setState({['' + fieldName]: true})
         }
     },
     render: function() {
@@ -63,13 +56,13 @@ var Add = React.createClass({
                     type='text'
                     className='add__author'
                     placeholder='Ваше имя'
-                    onChange={this.onAuthorChange}
+                    onChange={this.onFieldChange.bind(this, 'authorIsEmpty')}
                     ref='author'
                 />
                 <textarea
                     className='add__text'
                     placeholder='Текст новости'
-                    onChange={this.onTextChange}
+                    onChange={this.onFieldChange.bind(this, 'textIsEmpty')}
                     ref='text'>
                 </textarea>
                 <label className='add__checkrule'>
