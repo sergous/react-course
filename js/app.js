@@ -16,6 +16,8 @@ var my_news = [
     }
 ];
 
+window.ee = new EventEmitter();
+
 var Add = React.createClass({
     getInitialState: function() {       //устанавливаем начальное состояние (state)
         return {
@@ -30,9 +32,19 @@ var Add = React.createClass({
     },
     onBtnClickHandler: function(e) {
         e.preventDefault();
+
         var author = ReactDOM.findDOMNode(this.refs.author).value;
-        var text = ReactDOM.findDOMNode(this.refs.text).value;
-        alert(author + '\n' + text);
+        var textEl = ReactDOM.findDOMNode(this.refs.text);
+        var text = textEl.value;
+
+        var item = [{
+            author: author,
+            text: text,
+            bigText: '...'
+        }];
+
+        window.ee.emit('News.add', item);
+
     },
     onCheckRuleClick: function(e) {     //устанавливаем значение в state
         this.setState({
@@ -75,7 +87,7 @@ var Add = React.createClass({
                     disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
                     onClick={this.onBtnClickHandler}
                     ref='alert_button'>
-                    Показать alert
+                    Добавить новость
                 </button>
             </form>
         );
@@ -83,12 +95,33 @@ var Add = React.createClass({
 });
 
 var App = React.createClass({
+    getInitialState: function () {
+        return {
+            news: my_news
+        }
+    },
+
+    componentDidMount: function () {
+        var self = this;
+
+        window.ee.addListener('News.add', function (item) {
+            var nextNews = item.concat(self.state.news);
+            self.setState({
+                news: nextNews
+            })
+        })
+    },
+
+    componentWillMount: function () {
+        window.ee.removeListener('News.add')
+    },
+
     render: function() {
         return (
             <div className="app">
                 <h3>Новости</h3>
                 <Add />
-                <News data={my_news} />
+                <News data={this.state.news} />
             </div>
         );
     }
@@ -133,6 +166,19 @@ var Article = React.createClass({
 var News = React.createClass({
     propTypes: {
         data: React.PropTypes.array.isRequired
+    },
+    getInitialState: function() {
+        return {
+            news: my_news
+        }
+    },
+    componentDidMount: function() {
+        /* Слушай событие "Создана новость"
+         если событие произошло, обнови this.state.news
+         */
+    },
+    componentWillUnmount: function() {
+        /* Больше не слушай событие "Создана новость" */
     },
 
     render: function() {
